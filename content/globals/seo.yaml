@@ -11,12 +11,15 @@ data:
   use_sitemap: true
   sitemap_collections:
     - pages
-  trackers_local: false
-  trackers_staging: false
+  trackers_local: true
+  trackers_staging: true
   trackers_production: true
   use_google_site_verification: false
   use_fathom: false
   use_plausible: false
   use_cloudflare_web_analytics: false
   tracker_type: none
-  use_cookie_banner: false
+  use_cookie_banner: true
+  embeds: true
+  hide_by_default: true
+  display_style: left
