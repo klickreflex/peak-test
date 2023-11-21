@@ -61,6 +61,8 @@
                     }
                 {{ /seo:scripts }}
             {{ /if }}
+            {{# Make x-effect aware of changes in consent #}}
+            $store.cookieBanner.consent
             {{# Set embeds and dispatch event to embed component(s). #}}
             $store.cookieBanner.setEmbeds(embeds)
             $dispatch('embeds')
@@ -85,12 +87,12 @@
         {{ /if }}
     </p>
 
-    <div class="mt-4 flex flex-col space-y-2">
+    <div class="flex flex-col mt-4 space-y-2">
         {{# Functional cookies are always on. #}}
         <label class="inline-flex items-center">
-            <input class="mr-3 w-5 h-5 rounded border-neutral text-primary focus:outline-none focus-visible:ring focus-visible:ring-primary motion-safe:transition opacity-50" type="checkbox" name="functional" checked disabled>
+            <input class="w-5 h-5 mr-3 rounded opacity-50 border-neutral text-primary focus:outline-none focus-visible:ring focus-visible:ring-primary motion-safe:transition" type="checkbox" name="functional" checked disabled>
             <span class="flex flex-col">
-                <span class="font-bold text-xs">{{ trans:strings.cookie_functional }}</span>
+                <span class="text-xs font-bold">{{ trans:strings.cookie_functional }}</span>
                 <span class="text-xs text-neutral/75">{{ trans:strings.cookie_functional_explanation }}</span>
             </span>
         </label>
@@ -98,9 +100,9 @@
         {{# x-model analyticsStorage checkbox. #}}
         {{ if seo:tracker_type == 'gtag' || seo:tracker_type == 'gtm' }}
             <label class="inline-flex items-center">
-                <input class="mr-3 w-5 h-5 rounded border-neutral text-primary focus:outline-none focus-visible:ring focus-visible:ring-primary motion-safe:transition" type="checkbox" name="analytics_storage" x-model="analyticsStorage">
+                <input class="w-5 h-5 mr-3 rounded border-neutral text-primary focus:outline-none focus-visible:ring focus-visible:ring-primary motion-safe:transition" type="checkbox" name="analytics_storage" x-model="analyticsStorage">
                 <span class="flex flex-col">
-                    <span class="font-bold text-xs">{{ trans:strings.cookie_analytics }}</span>
+                    <span class="text-xs font-bold">{{ trans:strings.cookie_analytics }}</span>
                     <span class="text-xs text-neutral/75">{{ trans:strings.cookie_analytics_explanation }}</span>
                 </span>
             </label>
@@ -109,9 +111,9 @@
         {{# x-model adStorage checkbox only when GTM is being used. #}}
         {{ if seo:tracker_type == 'gtm' }}
             <label class="inline-flex items-center">
-                <input class="mr-3 w-5 h-5 rounded border-neutral text-primary focus:outline-none focus-visible:ring focus-visible:ring-primary motion-safe:transition" type="checkbox" name="ad_storage" x-model="adStorage">
+                <input class="w-5 h-5 mr-3 rounded border-neutral text-primary focus:outline-none focus-visible:ring focus-visible:ring-primary motion-safe:transition" type="checkbox" name="ad_storage" x-model="adStorage">
                 <span class="flex flex-col">
-                    <span class="font-bold text-xs">{{ trans:strings.cookie_ads }}</span>
+                    <span class="text-xs font-bold">{{ trans:strings.cookie_ads }}</span>
                     <span class="text-xs text-neutral/75">{{ trans:strings.cookie_ads_explanation }}</span>
                 </span>
             </label>
@@ -121,9 +123,9 @@
         {{ if seo:tracker_type == 'scripts' }}
             {{ seo:scripts }}
                 <label class="inline-flex items-center">
-                    <input class="mr-3 w-5 h-5 rounded border-neutral text-primary focus:outline-none focus-visible:ring focus-visible:ring-primary motion-safe:transition" type="checkbox" name="customScript{{ count }}" x-model="customScript{{ count }}">
+                    <input class="w-5 h-5 mr-3 rounded border-neutral text-primary focus:outline-none focus-visible:ring focus-visible:ring-primary motion-safe:transition" type="checkbox" name="customScript{{ count }}" x-model="customScript{{ count }}">
                     <span class="flex flex-col">
-                        <span class="font-bold text-xs">{{ category }}</span>
+                        <span class="text-xs font-bold">{{ category }}</span>
                         <span class="text-xs text-neutral/75">{{ explainer }}</span>
                     </span>
                 </label>
@@ -142,9 +144,9 @@
         {{# x-model embeds checkbox only when embeds is turned on. #}}
         {{ if seo:embeds }}
             <label class="inline-flex items-center">
-                <input class="mr-3 w-5 h-5 rounded border-neutral text-primary focus:outline-none focus-visible:ring focus-visible:ring-primary motion-safe:transition" type="checkbox" name="embeds" x-model="embeds">
+                <input class="w-5 h-5 mr-3 rounded border-neutral text-primary focus:outline-none focus-visible:ring focus-visible:ring-primary motion-safe:transition" type="checkbox" name="embeds" x-model="embeds">
                 <span class="flex flex-col">
-                    <span class="font-bold text-xs">{{ trans:strings.cookie_embeds }}</span>
+                    <span class="text-xs font-bold">{{ trans:strings.cookie_embeds }}</span>
                     <span class="text-xs text-neutral/75">{{ trans:strings.cookie_embeds_explanation }}</span>
                 </span>
             </label>
@@ -173,7 +175,7 @@
                 {{ /if }}
             "
             type="button"
-            class="px-4 py-2 bg-primary rounded text-sm font-bold text-white focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-primary motion-safe:transition"
+            class="px-4 py-2 text-sm font-bold text-white rounded bg-primary focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-primary motion-safe:transition"
             >
             {{ trans:strings.cookie_accept_all }}
         </button>
@@ -185,7 +187,7 @@
                 cookieConsentDate = '{{ now format="Y-m-d" }}'
             "
             type="button"
-            class="px-1 py-2 rounded text-sm font-bold text-neutral focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-primary motion-safe:transition"
+            class="px-1 py-2 text-sm font-bold rounded text-neutral focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-primary motion-safe:transition"
         >
             {{ trans:strings.cookie_accept_selected }}
         </button>
